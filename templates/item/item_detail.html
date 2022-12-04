@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+<p>{{ item.id }}</p>
+<p>{{ item.name }}</p>
+<p>{{ item.price }}</p>
+<p>{{ item.category }}</p>
+<a href="{% url 'purchase_data:item_update' item.pk %}">編集</a>
+<a href="{% url 'purchase_data:item_delete' item.pk %}">削除</a>
+<a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}

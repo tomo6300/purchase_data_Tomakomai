@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %} {% for item in item_list %}
+<p>
+    {{ item.id }}
+    <a href="{% url 'purchase_data:item_detail' item.pk %}">{{ item.name }}</a>
+</p>
+{% endfor %}
+<a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}

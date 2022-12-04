@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<h1>マイページ</h1>
+<h2><a href="{% url 'purchase_data:purchase_data_create' %}">購買データの登録</a></h2>
+<h2><a href="{% url 'purchase_data:purchase_data_list' %}">購買データの一覧</a></h2>
+<h2><a href="{% url 'purchase_data:item_create' %}">商品の登録</a></h2>
+<h2><a href="{% url 'purchase_data:item_list' %}">商品の一覧</a></h2>
+{% endblock %}
