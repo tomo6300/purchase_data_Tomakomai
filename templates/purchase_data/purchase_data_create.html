@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
+<h1>購入データの登録</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="datetime-local" name="date" placeholder="購入日時" required>
+    </div>
+    <div class="form-group">
+        <input type="text" name="place" placeholder="商品受け渡し場所" required>
+    </div>
+    <div class="form-group">
+        <label>{{ form.gender.label }}</label> {{ form.gender | add_class:'form-control col-2' }}
+    </div>
+    <div class="form-group">
+        <label>{{ form.age.label }}</label> {{ form.age | add_class:'form-control col-2' }}
+    </div>
+    <div class="form-group">
+        <label>{{ form.items.label }}</label> {{ form.items | add_class:'form-control col-2' }}
+    </div>
+    <div class="form-group">
+        {% for item in items %}
+        <input id="{{ item.id }}" class="input_chk" type="checkbox" name="items" value="{{ item.id }}">
+        <label class="surround_label" for="{{ item.id }}">{{ item.name }}</label> {% endfor %}
+    </div>
+    <button type="submit">登録</button>
+</form>
+
+{% endblock %}

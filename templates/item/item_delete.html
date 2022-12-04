@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+<h1>商品の削除</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>{{ purchase_data.id }} {{ purchase_data.date }} を削除します</p>
+    <input type="submit" value="削除">
+</form>
+{% endblock %}
