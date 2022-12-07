@@ -1,7 +1,47 @@
-{% extends 'base.html' %} {% block content %} {% for purchase_data in purchase_data_list %}
-<p>
-    {{ purchase_data.date }}
-    <a href="{% url 'purchase_data:purchase_data_detail' purchase_data.pk %}">{{ purchase_data.id }}</a>
-</p>
-{% endfor %}
+{% extends 'base.html' %} 
+{% block content %} 
+<h1>購入データの一覧</h1>
+<div class="main">
+<table>
+    <tr>
+        <th>ID</th>
+        <th>日付</th>
+        <!--<th>金額</th>
+        <th>詳細</th>
+        <th>カテゴリー</th>-->
+        <th>場所</th>
+        <th>性別</th>
+        <th>年齢</th>
+    </tr>
+    {% for p in purchase_data_list %}
+    <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.date }}</td>
+        <!--<td>{{ p.cost }}</td>
+        <td>{{ p.detail }}</td>
+        <td>{{ p.category }}</td>-->
+        <td>{{ p.place }}</td>
+        <td>{{ p.gender }}</td>
+        <td>{{ p.age }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<div class="main">
+    <!--<img src="/static/images/bar_{{ year }}_{{ month }}.svg"
+    width=80%>-->
+    <img src="data:image/png;base64,{{ bar | safe }}"
+    width=30%>
+</div>
+<div class="main">
+    <!--<img src="/static/images/circle_{{ year }}_{{ month }}.svg"
+    width=80%>-->
+    <img src="data:image/png;base64,{{ circle | safe }}"
+    width=30%>
+</div>
+</div>
+<p>人口</p>
+{{ map|safe }}
+<p>取引金額</p>
+{{ map2|safe }}
 <a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}
