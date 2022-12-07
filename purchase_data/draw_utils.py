@@ -38,8 +38,9 @@ def draw_graph():#year, month):    #追加
     day = [i for i in range(1, last_day)]
     cost = [0 for i in range(len(day))]
     for m in purchase:
-        item = Item.objects.filter(name=m.detail)
-        cost[int(str(m.date).split('-')[2].split(' ')[0])-1] += int(item[0].price)
+        for j in m.item.all():    
+            #item = Item.objects.filter(name=m.detail)
+            cost[int(str(m.date).split('-')[2].split(' ')[0])-1] += int(j.price)
     plt.figure(figsize=(5,5),dpi=50)
     plt.bar(day, cost, color='#00bfff', edgecolor='#0000ff')
     plt.grid(True)
@@ -61,12 +62,12 @@ def draw_circle():    #追加
     purchase = PurchaseData.objects.all()
     dic_category={}
     for m in purchase:
-        #cost[int(str(m.use_date).split('-')[2])-1] += int(m.cost)
-        item = Item.objects.filter(name=m.detail)
-        if item[0].category in dic_category:
-            dic_category[item[0].category] += int(item[0].price)
-        else:
-            dic_category[item[0].category] = int(item[0].price)
+        for j in m.item.all():
+            #item = Item.objects.filter(name=m.detail)
+            if j.category in dic_category:
+                dic_category[j.category] += int(j.price)
+            else:
+                dic_category[j.category] = int(j.price)
 
     #plt.rcParams['font.family'] = 'MS Gothic'    
     plt.figure(figsize=(5,5),dpi=50)
@@ -122,11 +123,12 @@ def visualize_locations2():
     purchase = PurchaseData.objects.all()
     dic_location={}
     for m in purchase:
-        item = Item.objects.filter(name=m.detail)
-        if m.place in dic_location:
-            dic_location[m.place] += int(item[0].price)
-        else:
-            dic_location[m.place] = int(item[0].price)        
+        for j in m.item.all():
+            #item = Item.objects.filter(name=m.detail)
+            if m.place in dic_location:
+                dic_location[m.place] += int(j.price)
+            else:
+                dic_location[m.place] = int(j.price)        
 
     filepath=os.path.join(BASE_DIR,'purchase_data/geoip/Tomakomaiv20401.csv')
     df=pd.read_csv(filepath)  
@@ -141,7 +143,7 @@ def visualize_locations2():
 
     for k,v in dic_location.items():
         folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
-                      radius = v*0.5,
+                      radius = v*0.2,
                       #radius = int(df.loc[df['町名']==k,'合計'].values.replace(',',''))/6,
                       #popup=df["町名"][i],
                       color  ="red",
