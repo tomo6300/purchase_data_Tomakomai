@@ -58,10 +58,17 @@ class PurchaseData(models.Model):
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    date = models.DateTimeField(verbose_name='購買日時', default=timezone.now())
+    detail = models.CharField(max_length=200)
+    #cost = models.IntegerField(default=0)
+    #category = models.CharField(max_length=10) 
+    #
+    date = models.DateTimeField(verbose_name='購買日時')
     place = models.CharField(verbose_name='商品受け渡し場所', max_length=40)
     gender = models.CharField(verbose_name='性別', choices=GENDER_CHOICES, max_length=2)
     age = models.CharField(verbose_name='年齢', choices=AGE_CHOICES, max_length=2)
     item = models.ManyToManyField(Item, verbose_name="購入商品", blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='作成日時', default=timezone.now())
     updated_at = models.DateTimeField(verbose_name='編集日時', blank=True, null=True)
+
+    def __str__(self):
+        return self.place
