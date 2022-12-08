@@ -14,6 +14,8 @@ import pandas as pd
 from pathlib import Path
 import base64
 from io import BytesIO
+from folium import FeatureGroup,LayerControl
+import matplotlib
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 plt.rcParams['font.family'] = 'MS Gothic'    #日本語の文字化け防止
@@ -188,5 +190,62 @@ def visualize_locations2():
                       <i>取引金額: </i><b>{}　円</b>
                       """.format(k,int(df.loc[df['町名']==k,'合計'].values.tolist()[0].replace(',','')),v)
                       ).add_to(m)
+    m = m._repr_html_()
+    return m
+
+def visualize_locations3():#カテゴリー別
+    #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
+    purchase = PurchaseData.objects.all()
+    dic_location={}
+    for m in purchase:
+        for j in m.item.all():
+            if j.category in dic_location:
+            #item = Item.objects.filter(name=m.detail)
+                if m.place in dic_location[j.category]:
+                    dic_location[j.category][m.place] += int(j.price)
+                else:
+                    dic_location[j.category][m.place] = int(j.price)
+            else:
+                dic_location[j.category]={}
+                dic_location[j.category][m.place] = int(j.price)
+
+
+    filepath=os.path.join(BASE_DIR,'purchase_data/geoip/Tomakomaiv20401.csv')
+    df=pd.read_csv(filepath)  
+    #df=pd.read_csv('money/geoip/Tomakomaiv20401.csv')    	
+    
+    f = folium.Figure(width=1000, height=500)
+
+    # 初期表示の中心の座標を指定して地図を作成する。
+    center_lat=42.63408
+    center_lon=141.606
+    m = folium.Map([center_lat,center_lon], zoom_start=11).add_to(f)
+    cm = ['red', 'blue', 'green', 'purple', 'orange', 'darkred',
+        'lightred', 'beige', 'darkblue', 'darkgreen', 'cadetblue',
+         'darkpurple', 'white', 'pink', 'lightblue', 'lightgreen',
+          'gray', 'black', 'lightgray']#matplotlib.cm.tab20
+    i=0
+    for c,d in dic_location.items():
+        group=FeatureGroup(name='{}'.format(c))
+        colors=cm[i]
+        i += 1 
+        for k,v in d.items():
+            folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
+                        radius = v*0.2,
+                        #radius = int(df.loc[df['町名']==k,'合計'].values.replace(',',''))/6,
+                        #popup=df["町名"][i],
+                        color  =colors,
+                        #opacity=0.2,
+                        weight=0.3,
+                        fill=True,
+                        popup="""
+                        <i>町名: </i><b>{}　　　　　　　</b>
+                        <i>人口: </i><b>{}　　　　</b>
+                        <i>取引金額: </i><b>{}　円</b>
+                        """.format(k,int(df.loc[df['町名']==k,'合計'].values.tolist()[0].replace(',','')),v),
+                        #name='{}'.format(c)
+                        ).add_to(group)
+        group.add_to(m)
+    LayerControl(collapsed=False).add_to(m)
     m = m._repr_html_()
     return m
