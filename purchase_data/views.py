@@ -18,32 +18,19 @@ class ItemCreateView(CreateView):
 
 class PurchaseDataCreateView(CreateView):
 
-    model = PurchaseData
+    #model = PurchaseData
     template_name = 'purchase_data/purchase_data_create.html'
     form_class = PurchaseDataForm
     success_url = reverse_lazy('purchase_data:purchase_data_create_complete')
 
-    #def get(self, request, *args, **kwargs):
-    #    
-    #    items   = Item.objects.all()
-    #    data    = PurchaseData.objects.all()
-    #    context = { "data":data,
-    #                "items":items }
-#
-    #    return render(request,"purchase_data/purchase_data_create.html",context)
-    
-    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
-        purchase_data = form.save(commit=False)
-        items_list = form.cleaned_data.get("item")
-	
-        purchase_data.save()
-	
-        if items_list:
-            for item in items_list:
-                purchase_data.item.add(Item.objects.get_or_create(name=item)[0])
-	    
-        form.save_m2m()
-        return super().form_valid(form)
+    def get(self, request, *args, **kwargs):
+        
+        items   = Item.objects.all()
+        form_class = PurchaseDataForm()
+        context = { "form": form_class,
+                    "items":items }
+
+        return render(request,"purchase_data/purchase_data_create.html",context)
 
     def post(self, request, *args, **kwargs):
 
@@ -123,7 +110,7 @@ class ItemUpdateView(UpdateView):
 class PurchaseDataUpdateView(UpdateView):
     template_name = 'purchase_data/purchase_data_update.html'
     model = PurchaseData
-    fields = ('date', 'place', 'gender', 'age', 'items')
+    fields = ('date', 'place', 'gender', 'age', 'item')
     success_url: reverse_lazy('purchase_data:purchase_data_list')
  
     def form_valid(self, form):

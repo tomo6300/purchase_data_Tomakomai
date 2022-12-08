@@ -4,7 +4,7 @@
 <p>{{ purchase_data.place }}</p>
 <p>{{ purchase_data.gender }}</p>
 <p>{{ purchase_data.age }}</p>
-<p>{{ purchase_data.items }}</p>
+<p>{{ purchase_data.item }}</p>
 <a href="{% url 'purchase_data:purchase_data_update' purchase_data.pk %}">編集</a>
 <a href="{% url 'purchase_data:purchase_data_delete' purchase_data.pk %}">削除</a>
 <a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}

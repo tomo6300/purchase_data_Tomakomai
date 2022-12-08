@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %} {% for item in item_list %}
+{% extends 'base.html' %}{% block extra_head %}
+<h1 class="m-0">商品の一覧</h1>
+{% endblock %} {% block content %} {% for item in item_list %}
 <p>
     {{ item.id }}
     <a href="{% url 'purchase_data:item_detail' item.pk %}">{{ item.name }}</a>

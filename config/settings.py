@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'purchase_data.apps.PurchaseDataConfig',
+    'adminlte3',
+    'adminlte3_theme',
     'bootstrap4',
     "crispy_forms",
     'widget_tweaks',

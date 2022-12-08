@@ -16,12 +16,13 @@ class PurchaseDataForm(forms.ModelForm):
 
     class Meta:
         model = PurchaseData
-        fields = ('date', 'place', 'gender', 'age')
+        fields = ('date', 'place', 'gender', 'age', 'item')
         widgets = {
             'date': forms.DateInput(attrs={'class': 'form-control'}),
             'place': forms.TextInput(attrs={'class': 'form-control'}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
             'age': forms.Select(attrs={'class': 'form-control'}),
+            'item': forms.SelectMultiple(attrs={'class': 'form-control'})
         }
     
     def clean_items(self):
