@@ -83,9 +83,11 @@ class PurchaseDataListView(ListView): ###
         age_cirfig = draw_utils.draw_circle_age()
         gender_cirfig = draw_utils.draw_circle_gender()
         tabe_cirfig = draw_utils.draw_circle_tabe()
+        m3 = draw_utils.visualize_locations3()
         context = { "purchase_data_list":data,
                     'map':m,
                     'map2':m2,
+                    'map3':m3,
                     'bar':barfig,
                     'circle':circlefig,
                     'circle_age':age_cirfig,
