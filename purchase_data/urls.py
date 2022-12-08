@@ -3,7 +3,8 @@ from . import views
  
 app_name = 'purchase_data'
 urlpatterns = [
-    path('index/', views.IndexView.as_view(), name='index'),
+    path('', views.IndexView.as_view(), name='index'),
+    #path('index/', views.IndexView.as_view(), name='index'),
     path('item/create/', views.ItemCreateView.as_view(), name='item_create'),
     path('item/create/complete', views.ItemCreateCompleteView.as_view(), name='item_create_complete'),
     path('item/list/', views.ItemListView.as_view(),name='item_list'),

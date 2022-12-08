@@ -6,6 +6,7 @@ from django.shortcuts import render,redirect
 from django import forms
 from .forms import ItemForm, PurchaseDataForm
 from .models import Item, PurchaseData
+from . import draw_utils
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -68,9 +69,28 @@ class ItemListView(ListView):
     template_name = 'item/item_list.html'
     model = Item
 
-class PurchaseDataListView(ListView):
+class PurchaseDataListView(ListView): ###
     template_name = 'purchase_data/purchase_data_list.html'
     model = PurchaseData
+
+    def get(self, request):
+        data    = PurchaseData.objects.all()
+
+        m = draw_utils.visualize_locations()
+        m2 = draw_utils.visualize_locations2()
+        barfig =draw_utils.draw_graph() 
+        circlefig = draw_utils.draw_circle()
+        context = { "purchase_data_list":data,
+                    'map':m,
+                    'map2':m2,
+                    'bar':barfig,
+                    'circle':circlefig
+                    }
+        return render(request,"purchase_data/purchase_data_list.html",context)
+
+    
+
+
 
 class ItemDetailView(DetailView):
     template_name = 'item/item_detail.html'
