@@ -45,20 +45,14 @@ def draw_graph():#year, month):    #追加
     plt.bar(day, cost, color='#00bfff', edgecolor='#0000ff')
     plt.grid(True)
     plt.xlim([0, 31])
-    plt.xlabel('日付', fontsize=16)#,fontname="MS Gothic")
-    plt.ylabel('支出額(円)', fontsize=16)#,fontname="MS Gothic")
-
-    #staticフォルダの中にimagesというフォルダを用意しておきその中に入るようにしておく
-    #barpath=os.path.join(BASE_DIR,'money/static/images/bar_{}_{}.svg'.format(year, month))
-    #plt.savefig(barpath,transparent=True)
-
+    plt.xlabel('日付', fontsize=16)
+    plt.ylabel('支出額(円)', fontsize=16)
     plt.tight_layout()
     graph = Output_Graph()
     return graph
 
-def draw_circle():    #追加
+def draw_circle(): 
     #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
-    
     purchase = PurchaseData.objects.all()
     dic_category={}
     for m in purchase:
@@ -72,18 +66,56 @@ def draw_circle():    #追加
     #plt.rcParams['font.family'] = 'MS Gothic'    
     plt.figure(figsize=(5,5),dpi=50)
     plt.pie(dic_category.values(), labels=dic_category.keys())
-    #plt.grid(True)
-    #plt.xlim([0, 31])
-    #plt.xlabel('日付', fontsize=16,fontname="MS Gothic")
-    #plt.ylabel('支出額(円)', fontsize=16,fontname="MS Gothic")
+    plt.tight_layout()
+    graph = Output_Graph()
+    return graph
 
-    #staticフォルダの中にimagesというフォルダを用意しておきその中に入るようにしておく
-    #circlepath=os.path.join(BASE_DIR,'money/static/images/circle_{}_{}.svg'.format(year, month))
-    #plt.savefig(circlepath,transparent=True)
-
+def draw_circle_tabe(): 
+    #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
+    purchase = PurchaseData.objects.all()
+    dic_category={}
+    for m in purchase:
+        for j in m.item.filter(category="食品"):
+            #item = Item.objects.filter(name=m.detail)
+            if j.name in dic_category:
+                dic_category[j.name] += int(j.price)
+            else:
+                dic_category[j.name] = int(j.price)    
+    plt.figure(figsize=(5,5),dpi=50)
+    plt.pie(dic_category.values(), labels=dic_category.keys())
     plt.tight_layout()
     graph = Output_Graph()
     return graph 
+
+def draw_circle_age():    #追加
+    purchase = PurchaseData.objects.all()
+    dic_age={}
+    for m in purchase:
+        #for j in m.item.all():
+        if m.age in dic_age:
+            dic_age[m.age] += 1 #int(j.price)
+        else:
+            dic_age[m.age] = 1 #int(j.price)    
+    plt.figure(figsize=(5,5),dpi=50)
+    plt.pie(dic_age.values(), labels=dic_age.keys())
+    plt.tight_layout()
+    graph = Output_Graph()
+    return graph 
+
+def draw_circle_gender():    #追加
+    purchase = PurchaseData.objects.all()
+    dic_gender={}
+    for m in purchase:
+        #for j in m.item.all():
+        if m.gender in dic_gender:
+            dic_gender[m.gender] += 1 #int(j.price)
+        else:
+            dic_gender[m.gender] = 1 #int(j.price)    
+    plt.figure(figsize=(5,5),dpi=50)
+    plt.pie(dic_gender.values(), labels=dic_gender.keys())
+    plt.tight_layout()
+    graph = Output_Graph()
+    return graph
 
 def visualize_locations(zoom=11):
     """日本を拡大した地図に、pandasデータフレームのlatitudeおよびlongitudeカラムをプロットする。
