@@ -16,8 +16,15 @@ import base64
 from io import BytesIO
 from folium import FeatureGroup,LayerControl
 import matplotlib
+import seaborn as sns
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sns.set()
+sns.set_style("whitegrid")
+sns.set_context("paper", 1.5, {"lines.linewidth": 4})
+sns.set_palette("pastel", 8, 1)
+#sns.set('talk', 'whitegrid', 'dark', font_scale=1.5,
+        #rc={"lines.linewidth": 2, 'grid.linestyle': '--'})
 plt.rcParams['font.family'] = 'MS Gothic'    #日本語の文字化け防止
 #plt.rcParams['font.family'] = 'IPAPGothic'    #日本語の文字化け防止
 
@@ -48,10 +55,15 @@ def draw_graph():#year, month):    #追加
     plt.grid(True)
     plt.xlim([0, 31])
     plt.xlabel('日付', fontsize=16)
-    plt.ylabel('支出額(円)', fontsize=16)
+    plt.ylabel('販売額(円)', fontsize=16)
     plt.tight_layout()
     graph = Output_Graph()
     return graph
+
+def get_num():
+    purchase = PurchaseData.objects.all()
+    n=len(purchase)
+    return n
 
 def draw_circle(): 
     #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
@@ -71,6 +83,26 @@ def draw_circle():
     plt.tight_layout()
     graph = Output_Graph()
     return graph
+
+def draw_rank(): 
+    #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
+    purchase = PurchaseData.objects.all()
+    dic_category={}
+    for m in purchase:
+        for j in m.item.all():#m.item.filter(category="食品"):
+            #item = Item.objects.filter(name=m.detail)
+            if j.name in dic_category:
+                dic_category[j.name] += int(j.price)
+            else:
+                dic_category[j.name] = int(j.price) 
+    dic_category2=sorted(dic_category.items())
+    dic_category.clear()
+    dic_category.update(dic_category2)   
+    plt.figure(figsize=(5,5),dpi=50)
+    plt.barh(list(dic_category.keys()),list(dic_category.values()))
+    plt.tight_layout()
+    graph = Output_Graph()
+    return graph 
 
 def draw_circle_tabe(): 
     #money = Money.objects.filter(use_date__year=year,use_date__month=month).order_by('use_date')
