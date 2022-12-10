@@ -84,6 +84,8 @@ class PurchaseDataListView(ListView): ###
         gender_cirfig = draw_utils.draw_circle_gender()
         tabe_cirfig = draw_utils.draw_circle_tabe()
         m3 = draw_utils.visualize_locations3()
+        rank=draw_utils.draw_rank()
+        n = draw_utils.get_num()
         context = { "purchase_data_list":data,
                     'map':m,
                     'map2':m2,
@@ -92,7 +94,9 @@ class PurchaseDataListView(ListView): ###
                     'circle':circlefig,
                     'circle_age':age_cirfig,
                     'circle_gender':gender_cirfig,
-                    'circle_tabe':tabe_cirfig
+                    'circle_tabe':tabe_cirfig,
+                    'rank':rank,
+                    'num':n
                     }
         return render(request,"purchase_data/purchase_data_list.html",context)
 
