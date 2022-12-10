@@ -38,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'purchase_data.apps.PurchaseDataConfig',
+    'adminlte3',
+    'adminlte3_theme',
     'bootstrap4',
     "crispy_forms",
     'widget_tweaks',
@@ -161,7 +164,7 @@ ACCOUNT_EMAIL_REQUIRED = True # サインアップ（ユーザー登録）の時
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # メール検証を必須とする
 
 LOGIN_URL = '/accounts/login/' # ログインURLの設定
-LOGIN_REDIRECT_URL = '/index/' # ログイン後のリダイレクト先
+LOGIN_REDIRECT_URL = '/' # ログイン後のリダイレクト先
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/' #　ログアウト後のリダイレクト先」
 
 

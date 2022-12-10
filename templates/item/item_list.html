@@ -1,7 +1,22 @@
-{% extends 'base.html' %} {% block content %} {% for item in item_list %}
-<p>
-    {{ item.id }}
-    <a href="{% url 'purchase_data:item_detail' item.pk %}">{{ item.name }}</a>
-</p>
-{% endfor %}
+{% extends 'base.html' %}{% block extra_head %}
+<h1 class="m-0">商品の一覧</h1>
+{% endblock %} {% block content %}
+<div class="main">
+    <table>
+        <tr>
+            <th>商品名</th>
+            <th>金額</th>
+            <th>カテゴリー</th>
+        </tr>
+        {% for i in item_list %}
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.price }}円</td>
+            <td>{{ i.category }}</td>
+            <td><a href="{% url 'purchase_data:item_update' i.pk %}">編集</a></td>
+            <td><a href="{% url 'purchase_data:item_delete' i.pk %}">削除</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 <a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}

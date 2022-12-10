@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('purchase_data.urls', namespace='purchase_data')),
     path('accounts/', include('allauth.urls')),
+   # path('', include('accounts.urls')), 
 ]

@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django import forms
-from .forms import ItemForm, PurchaseDataForm
+from .forms import ItemForm, PurchaseDataForm, PurchaseDataDetailForm, PurchaseDataDetailFormSet
 from .models import Item, PurchaseData
 from . import draw_utils
 
@@ -21,29 +21,20 @@ class PurchaseDataCreateView(CreateView):
     model = PurchaseData
     template_name = 'purchase_data/purchase_data_create.html'
     form_class = PurchaseDataForm
+    #formset_class = PurchaseDataDetailFormSet
     success_url = reverse_lazy('purchase_data:purchase_data_create_complete')
 
-    #def get(self, request, *args, **kwargs):
-    #    
-    #    items   = Item.objects.all()
-    #    data    = PurchaseData.objects.all()
-    #    context = { "data":data,
-    #                "items":items }
-#
-    #    return render(request,"purchase_data/purchase_data_create.html",context)
-    
-    def form_valid(self, form: forms.ModelForm) -> HttpResponse:
-        purchase_data = form.save(commit=False)
-        items_list = form.cleaned_data.get("item")
-	
-        purchase_data.save()
-	
-        if items_list:
-            for item in items_list:
-                purchase_data.item.add(Item.objects.get_or_create(name=item)[0])
-	    
-        form.save_m2m()
-        return super().form_valid(form)
+    def get(self, request, *args, **kwargs):
+        
+        #items   = Item.objects.all()
+        form_class = PurchaseDataForm
+        #form_detail_class = PurchaseDataDetailForm
+        context = { "form": form_class,
+                    #"form_detail": form_detail_class,
+                    #"items": items 
+                }
+
+        return render(request,"purchase_data/purchase_data_create.html",context)
 
     def post(self, request, *args, **kwargs):
 
@@ -52,9 +43,11 @@ class PurchaseDataCreateView(CreateView):
         if form.is_valid():
             print("バリデーションOK")
             form.save()
+            return redirect("purchase_data:purchase_data_create_complete")
 
         else:
             print("バリデーションNG")
+            print(form.errors)
 
         return redirect("purchase_data:purchase_data_create")
     
@@ -100,10 +93,6 @@ class PurchaseDataListView(ListView): ###
                     }
         return render(request,"purchase_data/purchase_data_list.html",context)
 
-    
-
-
-
 class ItemDetailView(DetailView):
     template_name = 'item/item_detail.html'
     model = Item
@@ -127,7 +116,7 @@ class ItemUpdateView(UpdateView):
 class PurchaseDataUpdateView(UpdateView):
     template_name = 'purchase_data/purchase_data_update.html'
     model = PurchaseData
-    fields = ('date', 'place', 'gender', 'age', 'items')
+    fields = ('date', 'place', 'gender', 'age', 'item')
     success_url: reverse_lazy('purchase_data:purchase_data_list')
  
     def form_valid(self, form):

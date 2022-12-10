@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load crispy_forms_tags %} {% load i18n %} {% load account socialaccount %} {% block head_title %}{% trans "Sign In" %}{% endblock %} {% block content %}
+{% extends "account/base.html" %} {% load crispy_forms_tags %} {% load i18n %} {% load account socialaccount %} {% block head_title %}{% trans "Sign In" %}{% endblock %} {% block content %}
 <div class="allauth_container">
 
     {% get_providers as socialaccount_providers %} {% if socialaccount_providers %}

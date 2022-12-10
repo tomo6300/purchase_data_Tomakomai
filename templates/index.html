@@ -1,7 +1,35 @@
-{% extends 'base.html' %} {% block content %}
-<h1>マイページ</h1>
-<h2><a href="{% url 'purchase_data:purchase_data_create' %}">購買データの登録</a></h2>
-<h2><a href="{% url 'purchase_data:purchase_data_list' %}">購買データの一覧</a></h2>
-<h2><a href="{% url 'purchase_data:item_create' %}">商品の登録</a></h2>
-<h2><a href="{% url 'purchase_data:item_list' %}">商品の一覧</a></h2>
+{% extends 'base.html' %} {% block extra_head %}
+<h1 class="m-0">Dashboard</h1>
+{% endblock %} {% block content %}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-5 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>購買データ</h3>
+                <p>取引のデータの登録、可視化したデータの閲覧はこちらから</p>
+            </div>
+
+            <a href="{% url 'purchase_data:purchase_data_create' %}" class="small-box-footer">登録 <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{% url 'purchase_data:purchase_data_list' %}" class="small-box-footer">一覧を見る <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-5 col-6">
+        <!-- small box -->
+        <div class="small-box bg-gradient-success">
+            <div class="inner">
+                <h3>商品</h3>
+                <p>取り扱っている商品の登録、登録商品の確認はこちらから</p>
+            </div>
+            <a href="{% url 'purchase_data:item_create' %}" class="small-box-footer">登録 <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{% url 'purchase_data:item_list' %}" class="small-box-footer">一覧を見る <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+<!-- /.row -->
+
 {% endblock %}

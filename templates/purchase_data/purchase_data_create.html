@@ -1,27 +1,44 @@
-{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
-<h1>購入データの登録</h1>
+{% extends 'base.html' %} {% load widget_tweaks %} {% block extra_head %}
+<h1 class="m-0">購入データの登録</h1>
+{% endblock %} {% block content %}
 <form method="post">
-    {% csrf_token %}
+    {% csrf_token %} {{ data.as_p }}
+
     <div class="form-group">
-        <input type="datetime-local" name="date" placeholder="購入日時" required>
+        <label>{{ form.date.label }}</label>{{ form.date | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <input type="text" name="place" placeholder="商品受け渡し場所" required>
+        <label>{{ form.place.label }}</label>{{ form.place | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.gender.label }}</label> {{ form.gender | add_class:'form-control col-2' }}
+        <label>{{ form.gender.label }}</label> {{ form.gender | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.age.label }}</label> {{ form.age | add_class:'form-control col-2' }}
+        <label>{{ form.age.label }}</label> {{ form.age | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.items.label }}</label> {{ form.items | add_class:'form-control col-2' }}
+        <label>{{ form.item.label }}</label>
+        <br> {% for item in form.item %} {{ item }}{% endfor %}
     </div>
     <div class="form-group">
-        {% for item in items %}
-        <input id="{{ item.id }}" class="input_chk" type="checkbox" name="items" value="{{ item.id }}">
-        <label class="surround_label" for="{{ item.id }}">{{ item.name }}</label> {% endfor %}
+        <table class="table table-sm table-striped table-bordered ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>商品名</th>
+                    <th>個数</th>
+                </tr>
+            </thead>
+            <!--<tbody>
+                {% for item in form.item %}
+                <tr>
+                    <td>{{ item }}</td>
+                    <td class="number">{{ form.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>-->
+        </table>
     </div>
-    <button type="submit">登録</button>
+    <a href="{% url 'purchase_data:index' %}">トップへ戻る</a>
+    <button type="submit" name="submit">登録</button>
 </form>
-<a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}
+{% endblock %}

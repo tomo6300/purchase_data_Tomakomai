@@ -208,7 +208,8 @@ def visualize_locations2():
     m = folium.Map([center_lat,center_lon], zoom_start=11).add_to(f)
 
     for k,v in dic_location.items():
-        folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
+        try:
+            folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
                       radius = v*0.2,
                       #radius = int(df.loc[df['町名']==k,'合計'].values.replace(',',''))/6,
                       #popup=df["町名"][i],
@@ -222,6 +223,8 @@ def visualize_locations2():
                       <i>取引金額: </i><b>{}　円</b>
                       """.format(k,int(df.loc[df['町名']==k,'合計'].values.tolist()[0].replace(',','')),v)
                       ).add_to(m)
+        except TypeError as e:
+            print(e)
     m = m._repr_html_()
     return m
 
@@ -262,7 +265,8 @@ def visualize_locations3():#カテゴリー別
         colors=cm[i]
         i += 1 
         for k,v in d.items():
-            folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
+            try:
+                folium.Circle(location=[float(df.loc[df['町名']==k,'緯度'].values),float(df.loc[df['町名']==k,'経度'].values)],
                         radius = v*0.2,
                         #radius = int(df.loc[df['町名']==k,'合計'].values.replace(',',''))/6,
                         #popup=df["町名"][i],
@@ -277,6 +281,8 @@ def visualize_locations3():#カテゴリー別
                         """.format(k,int(df.loc[df['町名']==k,'合計'].values.tolist()[0].replace(',','')),v),
                         #name='{}'.format(c)
                         ).add_to(group)
+            except TypeError as e:
+                print(e)
         group.add_to(m)
     LayerControl(collapsed=False).add_to(m)
     m = m._repr_html_()
