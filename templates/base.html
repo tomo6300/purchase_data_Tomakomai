@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="jp">
-{% bootstrap_css %}
-
 <head>
     <meta charset="UTF-8">
     <title>PurchaseDataApp</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/allauth.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'purchase_data/style.css' %}">
 </head>
-
 <body>
-    <a href="{% url 'account_logout' %}">ログアウト</a> {% block content %} {% endblock %}
+    <a href="{% url 'account_logout' %}">ログアウト</a> 
+        {% block content %} {% endblock %}
 </body>
 
 </html>
