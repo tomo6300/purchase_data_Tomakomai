@@ -5,24 +5,40 @@
     {% csrf_token %} {{ data.as_p }}
 
     <div class="form-group">
-        <label>{{ form.date.label }}</label><br>
-        <input type="datetime-local" name="date" required>
+        <label>{{ form.date.label }}</label>{{ form.date | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.place.label }}</label><br>
-        <input type="text" name="place" required>
+        <label>{{ form.place.label }}</label>{{ form.place | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.gender.label }}</label> {{ form.gender | add_class:'form-control col-2' }}
+        <label>{{ form.gender.label }}</label> {{ form.gender | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        <label>{{ form.age.label }}</label> {{ form.age | add_class:'form-control col-2' }}
+        <label>{{ form.age.label }}</label> {{ form.age | add_class:'form-control col-3' }}
     </div>
     <div class="form-group">
-        {% for item in items %}
-        <input id="{{ item.id }}" class="input_chk" type="checkbox" name="items" value="{{ item.id }}">
-        <label class="surround_label" for="{{ item.id }}">{{ item.name }}</label> {% endfor %}
+        <label>{{ form.item.label }}</label>
+        <br> {% for item in form.item %} {{ item }}{% endfor %}
     </div>
-    <a href="{% url 'purchase_data:index' %}">トップへ戻る</a> <button type="submit">登録</button>
+    <div class="form-group">
+        <table class="table table-sm table-striped table-bordered ">
+            <thead class="thead-dark">
+                <tr>
+                    <th>商品名</th>
+                    <th>個数</th>
+                </tr>
+            </thead>
+            <!--<tbody>
+                {% for item in form.item %}
+                <tr>
+                    <td>{{ item }}</td>
+                    <td class="number">{{ form.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>-->
+        </table>
+    </div>
+    <a href="{% url 'purchase_data:index' %}">トップへ戻る</a>
+    <button type="submit" name="submit">登録</button>
 </form>
 {% endblock %}

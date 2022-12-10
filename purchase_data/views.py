@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django import forms
-from .forms import ItemForm, PurchaseDataForm
+from .forms import ItemForm, PurchaseDataForm, PurchaseDataDetailForm, PurchaseDataDetailFormSet
 from .models import Item, PurchaseData
 from . import draw_utils
 
@@ -18,17 +18,21 @@ class ItemCreateView(CreateView):
 
 class PurchaseDataCreateView(CreateView):
 
-    #model = PurchaseData
+    model = PurchaseData
     template_name = 'purchase_data/purchase_data_create.html'
     form_class = PurchaseDataForm
+    #formset_class = PurchaseDataDetailFormSet
     success_url = reverse_lazy('purchase_data:purchase_data_create_complete')
 
     def get(self, request, *args, **kwargs):
         
-        items   = Item.objects.all()
-        form_class = PurchaseDataForm()
+        #items   = Item.objects.all()
+        form_class = PurchaseDataForm
+        #form_detail_class = PurchaseDataDetailForm
         context = { "form": form_class,
-                    "items":items }
+                    #"form_detail": form_detail_class,
+                    #"items": items 
+                }
 
         return render(request,"purchase_data/purchase_data_create.html",context)
 
@@ -39,9 +43,11 @@ class PurchaseDataCreateView(CreateView):
         if form.is_valid():
             print("バリデーションOK")
             form.save()
+            return redirect("purchase_data:purchase_data_create_complete")
 
         else:
             print("バリデーションNG")
+            print(form.errors)
 
         return redirect("purchase_data:purchase_data_create")
     
@@ -82,10 +88,6 @@ class PurchaseDataListView(ListView): ###
                     'circle_tabe':tabe_cirfig
                     }
         return render(request,"purchase_data/purchase_data_list.html",context)
-
-    
-
-
 
 class ItemDetailView(DetailView):
     template_name = 'item/item_detail.html'

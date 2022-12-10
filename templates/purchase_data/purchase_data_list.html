@@ -2,53 +2,6 @@
 <h1 class="m-0">購入データの一覧</h1>
 {% endblock %} {% block content %}
 <div class="main">
-<<<<<<< HEAD
-<table>
-    <tr>
-        <th>日付</th>
-        <th>金額</th>
-        <th>詳細</th>
-        <th>カテゴリー</th>
-        <th>場所</th>
-        <th>性別</th>
-        <th>年齢</th>
-    </tr>
-    {% for p in purchase_data_list %}
-    {% for j in p.item.all %}
-    <tr>
-        <td>{{ p.date }}</td>
-        <td>{{ j.price }}円</td>
-        <td>{{ j.name }}</td>
-        <td>{{ j.category }}</td>
-        <td>{{ p.place }}</td>
-        <td>{{ p.gender }}</td>
-        <td>{{ p.age }}</td>
-    </tr>
-    {% endfor %}
-    {% endfor %}
-</table>
-</div>
-<div class="main">
-    <img src="data:image/png;base64,{{ bar | safe }}"
-    width=30%>
-</div>
-<div class="main">
-    <img src="data:image/png;base64,{{ circle | safe }}"
-    width=30%>
-</div>
-<div class="main">
-    <img src="data:image/png;base64,{{ circle_tabe | safe }}"
-    width=30%>
-</div>
-<div class="main">
-    <img src="data:image/png;base64,{{ circle_age | safe }}"
-    width=30%>
-</div>
-<div class="main">
-    <img src="data:image/png;base64,{{ circle_gender | safe }}"
-    width=30%>
-</div>
-=======
     <table>
         <tr>
             <th>日付</th>
@@ -62,7 +15,7 @@
         {% for p in purchase_data_list %} {% for j in p.item.all %}
         <tr>
             <td>{{ p.date }}</td>
-            <td>{{ j.price }}</td>
+            <td>{{ j.price }}円</td>
             <td>{{ j.name }}</td>
             <td>{{ j.category }}</td>
             <td>{{ p.place }}</td>
@@ -73,16 +26,22 @@
     </table>
 </div>
 <div class="main">
-    <!--<img src="/static/images/bar_{{ year }}_{{ month }}.svg"
-    width=80%>-->
     <img src="data:image/png;base64,{{ bar | safe }}" width=30%>
 </div>
 <div class="main">
-    <!--<img src="/static/images/circle_{{ year }}_{{ month }}.svg"
-    width=80%>-->
     <img src="data:image/png;base64,{{ circle | safe }}" width=30%>
->>>>>>> 36b4d66 (yagi)
 </div>
+<div class="main">
+    <img src="data:image/png;base64,{{ circle_tabe | safe }}" width=30%>
+</div>
+<div class="main">
+    <img src="data:image/png;base64,{{ circle_age | safe }}" width=30%>
+</div>
+<div class="main">
+    <img src="data:image/png;base64,{{ circle_gender | safe }}" width=30%>
+</div>
+
+
 <p>取引金額</p>
 {{ map2|safe }}
 <p>カテゴリー別</p>
