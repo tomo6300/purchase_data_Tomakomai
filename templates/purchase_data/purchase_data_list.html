@@ -1,8 +1,12 @@
 {% extends 'base.html' %} 
 {% block content %} 
-<h1>購入データの一覧</h1><h2> データ数:{{ num }}</h2>
-<div class="flex">
-    <div class="right">
+<h1>購入データの一覧</h1>
+<div class="row">
+    <div class="col-md-2">
+        <h2> データ数:{{ num }}</h2></div>
+    <div class="col-md-10">
+        <!--<div class="flex">
+            <div class="right">-->
         <table>
             <tr>
                 <th>日付</th>
@@ -27,37 +31,32 @@
             {% endfor %}
             {% endfor %}
         </table>
-    </div>
-    <div class="left">
-        <p>日ごとの販売額</p>
-        <img src="data:image/png;base64,{{ bar | safe }}"
-        width=40%>
-    </div>
-</div> 
-<div class="flex">
-    <div class="right">    
-    <img src="data:image/png;base64,{{ circle | safe }}"
-    width=40%></div>
-    <div class="left"> <img src="data:image/png;base64,{{ rank | safe }}"
-    width=40%></div>
+    </div></div>
+<div class="row">    
+    <div class="col-md-4">
+        <h3>　日ごとの販売額</h3>
+        <img src="data:image/png;base64,{{ bar | safe }}"></div> 
+    <div class="col-md-4"> 
+        <h3>　売上ランキング</h3>   
+        <img src="data:image/png;base64,{{ rank | safe }}"></div>
+    <div class="col-md-4">
+        <h3>　カテゴリー別</h3>
+        <img src="data:image/png;base64,{{ circle | safe }}"></div>
 </div>
-<div class="flex">
-    <div class="right">
-    <img src="data:image/png;base64,{{ circle_age | safe }}"
-    width=40%></div>
-    <div class="left"><img src="data:image/png;base64,{{ circle_gender | safe }}"
-    width=40%></div>
+<div class="row">
+    <h2>　客層</h2></div>
+<div class="row">    
+    <div class="col-md-4">
+        <h3>　年齢別</h3>
+    <img src="data:image/png;base64,{{ circle_age | safe }}"></div>
+    <div class="col-md-4">
+        <h3>　性別</h3>
+        <img src="data:image/png;base64,{{ circle_gender | safe }}"></div>
 </div>
-<div class="flex">
-    <div class="left">
-<p>取引金額</p> 
+<h3>取引金額</h3> 
 {{ map2|safe }}
-    </div>
-    <div class="right">
-<p>カテゴリー別</p>
+<h3>カテゴリー別</h3>
 {{ map3|safe }}
-    </div>
-</div>
-<p>人口</p>
+<h3>人口</h3>
 {{ map|safe }}
 <a href="{% url 'purchase_data:index' %}">戻る</a> {% endblock %}
